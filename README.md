@@ -4,14 +4,31 @@ A macOS menu-bar app that makes a Force Touch trackpad feel textured. Slide a fi
 
 Status: early prototype.
 
+## Install
+
+Paste this into Terminal:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/loganprosser/mac-feelpad/main/install.sh | bash
+```
+
+It downloads the latest release into Applications and opens it. Run it again to update. Feelpad appears as a hand icon in the menu bar, with no Dock icon.
+
+Or install by hand: download `Feelpad.zip` from [Releases](https://github.com/loganprosser/mac-feelpad/releases), unzip it, and drag `Feelpad.app` to Applications. The app is not signed with an Apple Developer ID, so the first time you open it macOS blocks it. Go to System Settings, then Privacy & Security, and click Open Anyway.
+
+To uninstall, quit Feelpad from its menu and delete `Feelpad.app` from Applications.
+
 ## Requirements
 
-- Apple silicon Mac with a Force Touch trackpad
+- Apple silicon Mac (M1 or newer) with a Force Touch trackpad, which includes every Apple silicon MacBook Air and MacBook Pro
 - macOS 15 or later
 - Tested only on one M3 Max MacBook Pro running macOS 26.6
-- To build: Apple Command Line Tools (Xcode is not needed), Swift 6
 
-## Build and run
+To check a Mac's trackpad, run `ioreg -r -c AppleMultitouchDevice -l | grep ActuationSupported` and look for `Yes`.
+
+## Build from source
+
+Needs Apple Command Line Tools (`xcode-select --install`); Xcode is not needed.
 
 ```sh
 ./scripts/test.sh
@@ -21,7 +38,7 @@ open dist/Feelpad.app
 
 `scripts/test.sh` is `swift test` plus a plugin path that Command Line Tools installs need for Swift Testing.
 
-The bundle is ad-hoc signed, so it runs on the machine that built it. It appears as an icon in the menu bar, with no Dock icon.
+To publish a release that the installer picks up, commit and push, then run `./scripts/release.sh 0.1.0` (needs the GitHub CLI, `gh`).
 
 ## Usage
 

@@ -13,6 +13,8 @@ rm -rf "$app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp "$bin" "$app/Contents/MacOS/Feelpad"
 cp "$root/Resources/Info.plist" "$app/Contents/Info.plist"
+# scripts/release.sh sets VERSION to stamp the release number into the bundle.
+if [[ -n "${VERSION:-}" ]]; then plutil -replace CFBundleShortVersionString -string "$VERSION" "$app/Contents/Info.plist"; fi
 
 codesign --force --sign - "$app"
 
